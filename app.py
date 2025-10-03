@@ -17,7 +17,7 @@ ARABIC_TEMPLATES_PATH = "./نماذج عقود/مصري - Copy"
 # -------------------------------
 # Gemini API Configuration
 st.sidebar.header("إعدادات Gemini API")
-gemini_api_key = "AIzaSyAxyUMN_qQHctU8fTMYByEpxh69BrjJoCQ"
+gemini_api_key = "ADD YOUR API HERE"
 
 if gemini_api_key:
     genai.configure(api_key=gemini_api_key)
@@ -184,3 +184,4 @@ if st.button("إنشاء العقد"):
         st.subheader("العقد المُولد")
         st.text_area("نص العقد", output, height=600)
         st.download_button("تحميل العقد", output, file_name="generated_arabic_contract.txt")
+
