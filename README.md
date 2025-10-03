@@ -1,151 +1,148 @@
-Arabic Contract Generator using RAG and Gemini
-This project is a web-based application built with Streamlit that automatically generates Arabic legal contracts. It leverages a Retrieval-Augmented Generation (RAG) pipeline, combining a local knowledge base of contract templates with the powerful generative capabilities of Google's Gemini Pro model to produce customized, contextually-aware legal documents.
 
-📜 Table of Contents
-Features
 
-How It Works: The Technical Workflow
+# 🖋️ Arabic Contract Generator
 
-Theoretical Concepts
+[](https://www.python.org/downloads/)
+[](https://streamlit.io)
+[](https://www.langchain.com/)
+[](https://ai.google.dev/)
 
-Retrieval-Augmented Generation (RAG)
+This web application provides a simple and efficient way to generate Arabic legal contracts. It uses a powerful **Retrieval-Augmented Generation (RAG)** architecture to combine your custom details with a knowledge base of existing legal templates, ensuring the final document is both accurate and relevant.
 
-Embeddings and Vector Stores
+-----
 
-Project Structure
+## 🌟 Key Features
 
-Setup and Installation
+  - **📄 Dynamic Generation**: Creates contracts on-the-fly based on user inputs.
+  - **📚 Template-Grounded**: Relies on a library of `.docx` legal templates to ensure quality and correctness.
+  - **🤖 AI-Powered**: Uses Google's Gemini model for fluent and professional contract language.
+  - **🖥️ Simple UI**: An intuitive web interface built with Streamlit makes it easy for anyone to use.
+  - **📥 Downloadable**: Instantly download the generated contract as a text file.
 
-Usage
+-----
 
-Dependencies
+## ⚙️ How It Works: The RAG Pipeline
 
-✨ Features
-Dynamic Contract Generation: Create customized Arabic contracts based on user-provided details.
+The application doesn't just ask an AI to write a contract from scratch. Instead, it uses a RAG pipeline, which is like giving the AI an "open-book exam." The AI can reference your trusted templates to generate the best possible output, reducing errors and "hallucinations."
 
-Template-Based: Utilizes a library of pre-written Arabic contract templates (.docx files) to ensure legal accuracy and relevance.
+Here is a visual overview of the workflow:
 
-Intuitive Web UI: A simple, user-friendly interface built with Streamlit for easy input of contract details.
+```mermaid
+graph TD
+    A[📄 DOCX Templates] -->|1. Load & Chunk| B(Text Chunks);
+    B -->|2. Create Embeddings| C(Vector Database - FAISS);
+    D[👤 User Inputs] -->|3. Formulate Query| E{Similarity Search};
+    C --> E;
+    E -->|4. Retrieve Relevant Context| F(Context Chunks);
+    F -->|5. Augment Prompt| G[🤖 Gemini LLM];
+    D -->|Also feeds into| G;
+    G -->|6. Generate Final Contract| H[📜 Generated Contract];
+```
 
-Powered by Gemini: Leverages Google's Gemini Large Language Model for coherent and professional text generation.
+**Step-by-Step Breakdown:**
 
-Downloadable Output: Generated contracts can be easily downloaded as text files.
+1.  **Load & Chunk**: The relevant `.docx` contract templates are loaded and split into smaller, manageable chunks of text.
+2.  **Embed & Store**: Each chunk is converted into a numerical vector (an "embedding") and stored in a FAISS vector database. This index captures the semantic meaning of the text.
+3.  **Query & Retrieve**: When you fill out the form, your request is used to search the vector database for the most relevant chunks from the original templates.
+4.  **Augment & Generate**: These retrieved chunks are combined with your specific details (names, dates, etc.) into a single, comprehensive prompt. This "augmented" prompt is then sent to the Gemini API, which generates the final, coherent contract.
 
-Categorized Contracts: Supports various contract types, including sales, leases, construction, and more.
+-----
 
-🔧 How It Works: The Technical Workflow
-The application follows a sophisticated process to transform user inputs and document templates into a finished contract. This process is known as Retrieval-Augmented Generation (RAG).
+## 🛠️ Tech Stack
 
-Template Loading: The application first identifies the category of contract the user has selected (e.g., "Lease Contracts"). It then loads the relevant .docx template files from the local ./نماذج عقود/مصري - Copy directory using LangChain's UnstructuredWordDocumentLoader.
+  - **Frontend**: [Streamlit](https://streamlit.io/)
+  - **AI/LLM**: [Google Gemini Pro](https://ai.google.dev/)
+  - **Orchestration**: [LangChain](https://www.langchain.com/)
+  - **Embeddings**: [Hugging Face Sentence Transformers](https://huggingface.co/sentence-transformers)
+  - **Vector Store**: [FAISS (Facebook AI Similarity Search)](https://engineering.fb.com/2017/03/29/data-infrastructure/faiss-a-library-for-efficient-similarity-search/)
+  - **Document Loading**: `unstructured`, `python-docx`
 
-Text Chunking: Legal documents can be lengthy. To process them efficiently, the loaded text is broken down into smaller, semantically meaningful chunks using the RecursiveCharacterTextSplitter. This step is crucial for the embedding and retrieval process.
+-----
 
-Embedding Generation: Each text chunk is converted into a numerical vector representation using a sentence-transformer model (all-MiniLM-L6-v2) via Hugging Face Embeddings. These vectors, or "embeddings," capture the semantic meaning of the text, allowing for comparisons based on context rather than just keywords.
+## 🏁 Getting Started
 
-Vector Indexing: The generated embeddings are stored and indexed in a FAISS (Facebook AI Similarity Search) vector store. This creates a searchable, in-memory database where we can quickly find text chunks that are semantically similar to a given query.
+Follow these instructions to set up and run the project on your local machine.
 
-User Input: The Streamlit interface collects all the necessary details for the contract, such as the names of the parties, dates, financial values, and special terms.
+### Prerequisites
 
-Context Retrieval: When the user clicks "Generate Contract," the application performs a similarity search on the FAISS vector store. It looks for the document chunks that are most relevant to the selected contract type.
+  - Python 3.9+
+  - Git for cloning the repository.
 
-Prompt Augmentation: The retrieved text chunks are combined with the user's input to create a detailed, context-rich prompt. This "augments" the prompt with specific examples and phrasing from the original templates.
+### Installation & Setup
 
-Contract Generation: This final, augmented prompt is sent to the Google Gemini Pro API. The LLM uses the provided context and user details to generate a complete, well-structured Arabic contract that is both customized and grounded in the provided legal templates.
+**1. Clone the Repository**
 
-🧠 Theoretical Concepts
-Retrieval-Augmented Generation (RAG)
-RAG is an advanced AI architecture that enhances the capabilities of Large Language Models (LLMs) by connecting them to external knowledge bases. Instead of relying solely on its pre-trained data, an LLM using RAG can pull in relevant, real-time information to answer questions or complete tasks.
-
-In this project, RAG prevents the LLM from "hallucinating" or inventing legal clauses by forcing it to base its generation on the actual content retrieved from the trusted .docx templates.
-
-Embeddings and Vector Stores
-Embeddings are the cornerstone of modern NLP. They are dense vector representations of text where words and sentences with similar meanings are located close to each other in the vector space. This allows the algorithm to understand context and relevance in a way that simple keyword matching cannot.
-
-A Vector Store (like FAISS) is a specialized database designed to store these embeddings and perform incredibly fast similarity searches. When we want to find the most relevant document chunks, we embed our query and ask the vector store to return the vectors (and their corresponding text) that are "closest" to our query vector.
-
-📁 Project Structure
-.
-├── نماذج عقود/مصري - Copy/
-│   ├── عقد بيع شقة.docx
-│   ├── عقد إيجار.docx
-│   └── ... (and other .docx templates)
-├── app.py                  # Main Streamlit application script
-├── requirements.txt        # List of Python dependencies
-└── README.md               # This file
-🚀 Setup and Installation
-Follow these steps to run the project locally.
-
-1. Clone the Repository
-
-Bash
-
+```bash
 git clone <your-repository-url>
 cd <repository-folder>
-2. Create a Python Virtual Environment
-It's highly recommended to use a virtual environment to manage project dependencies.
+```
 
-Bash
+**2. Create and Activate a Virtual Environment**
+This keeps your project dependencies isolated.
 
+```bash
+# For macOS/Linux
+python3 -m venv venv
+source venv/bin/activate
+
+# For Windows
 python -m venv venv
-source venv/bin/activate   # On Windows, use `venv\Scripts\activate`
-3. Install Dependencies
-Install all the required Python libraries from the requirements.txt file.
+.\venv\Scripts\activate
+```
 
-Bash
+**3. Install Dependencies**
 
+```bash
 pip install -r requirements.txt
-4. Get a Gemini API Key
+```
 
-Go to the Google AI for Developers website and generate an API key.
+**4. Configure Your Gemini API Key**
 
-Important: The provided code hardcodes the API key. This is not secure. It is strongly recommended to use an environment variable instead.
+> **⚠️ Security Warning:** Never hardcode your API keys directly in the code. Use environment variables for security.
 
-Set the environment variable in your terminal:
+Create a file named `.env` in the root of your project folder and add your API key to it:
 
-Bash
+```
+# .env file
+GEMINI_API_KEY="YOUR_API_KEY_HERE"
+```
 
-export GOOGLE_API_KEY="YOUR_API_KEY_HERE"  # On Linux/macOS
-set GOOGLE_API_KEY="YOUR_API_KEY_HERE"    # On Windows
-Then, modify the Python script to read the key from the environment:
+The application code needs to be updated to load this key. Make sure your Python script includes:
 
-Python
-
-# In app.py
+```python
+# app.py
+from dotenv import load_dotenv
 import os
-gemini_api_key = os.getenv("GOOGLE_API_KEY")
-5. Run the Streamlit App
 
-Bash
+load_dotenv() # Loads variables from .env file
+gemini_api_key = os.getenv("GEMINI_API_KEY")
 
+# Also, add python-dotenv to your requirements.txt
+# pip install python-dotenv
+```
+
+### Run the Application
+
+Once the setup is complete, run the following command in your terminal:
+
+```bash
 streamlit run app.py
-Open your web browser and navigate to the local URL provided by Streamlit (usually http://localhost:8501).
+```
 
-🖥️ Usage
-Launch the application.
+Your browser should automatically open to the application's URL (e.g., `http://localhost:8501`).
 
-If you haven't set an environment variable, enter your Gemini API Key in the sidebar.
+-----
 
-From the dropdown menu, select the main category of the contract you wish to generate (e.g., "عقود الإيجار" - Lease Contracts).
+## 📂 Project Structure
 
-Fill in the details for both parties, dates, jurisdiction, and any other relevant terms in the form.
-
-Click the "إنشاء العقد" (Generate Contract) button.
-
-The application will process your request and display the generated contract in a text box.
-
-You can review the text and click the "تحميل العقد" (Download Contract) button to save it as a .txt file.
-
-📦 Dependencies
-The project relies on the following major libraries:
-
-streamlit: For creating the web application interface.
-
-langchain-community: For document loading, text splitting, and vector store integration.
-
-google-generativeai: The official Python SDK for the Gemini API.
-
-sentence-transformers: For generating text embeddings.
-
-faiss-cpu: For the vector store and similarity search functionality.
-
-unstructured & python-docx: For parsing and reading .docx files.
+```
+.
+├── 📄 .env                  # Stores your API key (add this file)
+├── 📜 app.py                 # The main Streamlit application script
+├── 📋 requirements.txt       # List of Python dependencies
+├── 📁 نماذج عقود/            # Directory for contract templates
+│   └── 📄 عقد بيع شقة.docx
+│   └── 📄 عقد إيجار.docx
+│   └── ...
+└── 🖼️ image_815a11.png      # UI screenshot for the README
+```
