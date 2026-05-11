@@ -1,0 +1,50 @@
+# --- secrets ---
+.streamlit/secrets.toml
+.env
+*.env
+*.key
+
+# --- python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.venv/
+venv/
+env/
+
+# --- caches ---
+.cache/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+models/
+*.bin
+*.safetensors
+
+# --- vector db (regenerated on first run) ---
+vector_db/
+
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+
+# --- streamlit ---
+.streamlit/cache/
+
+# --- temp / generated ---
+*.tmp
+~$*
+~WRL*.tmp
+generated/
+output/
+
+# --- archives (keep originals, ignore zips) ---
+*.zip
