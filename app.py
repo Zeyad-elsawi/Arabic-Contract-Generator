@@ -214,13 +214,14 @@ def _sidebar() -> None:
             st.info("⚡ وضع Groq السحابي مفعل (استدعاء نماذج Llama-3.3-70B)")
             key_input = st.text_input(
                 "مفتاح Groq API Key:",
-                value=groq_key,
+                value="",
                 type="password",
+                placeholder="أدخل مفتاح Groq الخاص بك...",
                 help="احصل على مفتاح مجاني من console.groq.com",
             )
-            if key_input != groq_key:
+            if key_input:
                 st.session_state["user_api_keys"]["GROQ_API_KEY"] = key_input.strip()
-                st.rerun()
+                st.success("تم تفعيل المفتاح للجلسة الحالية")
         else:
             st.success("🛡️ المحاكاة الذكية مفعلة (جاهز للعرض والتشغيل الفوري دون الحاجة لمفتاح)")
 

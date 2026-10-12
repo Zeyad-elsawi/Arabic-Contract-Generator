@@ -91,7 +91,7 @@ To enable Cloud AI inference:
 1. Obtain a free API key from [Groq Console](https://console.groq.com/keys).
 2. Enter the key directly in the Streamlit sidebar at runtime, **OR** add it to `.streamlit/secrets.toml`:
 ```toml
-GROQ_API_KEY = "gsk_your_groq_api_key_here"
+GROQ_API_KEY = "your_groq_api_key_here"
 ```
 
 ---
