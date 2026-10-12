@@ -21,13 +21,15 @@ VECTOR_DB_DIR.mkdir(exist_ok=True)
 GENERATED_DIR.mkdir(exist_ok=True)
 
 # -----------------------------------------------------------------------------
-# Groq model IDs (free tier as of 2026-05)
-# Swap any of these if Groq retires / renames a model.
+# Groq model IDs
 # -----------------------------------------------------------------------------
-DRAFTER_MODEL: str = "qwen/qwen3-32b"
+DRAFTER_MODEL: str = "llama-3.3-70b-versatile"
 CRITIC_MODEL: str = "llama-3.3-70b-versatile"
-REFINER_MODEL: str = "qwen/qwen3-32b"
+REFINER_MODEL: str = "llama-3.3-70b-versatile"
 WHISPER_MODEL: str = "whisper-large-v3"
+
+# Fallback fast model
+FAST_MODEL: str = "llama-3.1-8b-instant"
 
 # Optional premium polishing pass (Gemini). Only used if GEMINI_API_KEY is set.
 GEMINI_MODEL: str = "gemini-2.5-pro"
@@ -162,15 +164,19 @@ PARTY_ROLES: list[str] = [
 
 
 def get_api_key(name: str) -> str:
-    """Read a key from Streamlit secrets first, then environment.
+    """Read a key from Streamlit session_state, secrets, then environment.
 
     Returns empty string if not found - callers decide whether to error.
     """
     try:
         import streamlit as st  # local import keeps this module importable without streamlit
+        if hasattr(st, "session_state") and "user_api_keys" in st.session_state:
+            val = st.session_state["user_api_keys"].get(name, "")
+            if val:
+                return str(val).strip()
         val = st.secrets.get(name, "")
         if val and val != "PASTE_YOUR_FRESH_GROQ_KEY_HERE":
-            return str(val)
+            return str(val).strip()
     except Exception:
         pass
-    return os.environ.get(name, "")
+    return os.environ.get(name, "").strip()

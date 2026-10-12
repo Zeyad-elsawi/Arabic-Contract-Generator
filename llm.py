@@ -28,15 +28,15 @@ _CLIENT: Groq | None = None
 
 
 def get_client() -> Groq:
-    """Return a cached Groq client. Raises if no API key is configured."""
+    """Return a Groq client. Recreates if key changes or raises if not configured."""
     global _CLIENT
-    if _CLIENT is None:
-        key = config.get_api_key("GROQ_API_KEY")
-        if not key:
-            raise RuntimeError(
-                "GROQ_API_KEY is not set. Add it to .streamlit/secrets.toml "
-                "or set the environment variable."
-            )
+    key = config.get_api_key("GROQ_API_KEY")
+    if not key:
+        raise RuntimeError(
+            "GROQ_API_KEY is not set. Add it to .streamlit/secrets.toml "
+            "or enter it in the sidebar."
+        )
+    if _CLIENT is None or getattr(_CLIENT, "api_key", None) != key:
         _CLIENT = Groq(api_key=key)
     return _CLIENT
 
