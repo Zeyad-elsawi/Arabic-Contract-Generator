@@ -4,9 +4,12 @@
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.36%2B-FF4B4B.svg)](https://streamlit.io/)
 [![FAISS](https://img.shields.io/badge/Vector%20DB-FAISS-green.svg)](https://github.com/facebookresearch/faiss)
+[![Demo Video](https://img.shields.io/badge/Demo%20Video-Google%20Drive-red.svg?logo=googledrive)](https://drive.google.com/file/d/1f7iz25Hz7y1FoSQAWTeCEMsndHWFB_Qr/view?usp=sharing)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 An enterprise-grade, domain-specific **Multi-Agent AI legal assistant** tailored specifically for Egyptian civil and commercial law. The system automates end-to-end contract drafting, risk auditing, clause-level natural language editing, and professional document rendering (RTL Word & PDF).
+
+> 🎥 **Live Working Video Demo:** [Watch Full Demo on Google Drive](https://drive.google.com/file/d/1f7iz25Hz7y1FoSQAWTeCEMsndHWFB_Qr/view?usp=sharing)
 
 ---
 
